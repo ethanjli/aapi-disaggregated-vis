@@ -1024,6 +1024,21 @@ d3.select("#chart-height-very-tall").on("click", function() {
 });
 
 // Enable tooltips
+$("#chart-title").tooltip({
+  trigger: 'hover'
+});
+$("#next-btn").tooltip({
+  trigger: 'hover'
+});
+$("#autoplay-btn").tooltip({
+  trigger: 'hover'
+});
+$("#height-dropdown").tooltip({
+  trigger: 'hover'
+});
+$("#autoplay-speed-menu").tooltip({
+  trigger: 'hover'
+});
 $("body").tooltip({
   selector: '[data-toggle="tooltip"]'
 });

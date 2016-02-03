@@ -27,7 +27,7 @@
           <div id="chart-panel" class="panel panel-default">
             <div class="panel-heading">
               <div class="btn-group" role="group">
-                <button id="chart-title" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Introduction <span class="caret"></span></button>
+                <button id="chart-title" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Jump to a section of the guided tour of the data">Introduction <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li class="dropdown-header">Jump to section...</li>
                   <li><a id="jump-aggregated-immigration" data-target="#">Aggregated Immigration</a></li>
@@ -38,7 +38,7 @@
               </div>
               <div class="btn-toolbar pull-right" role="toolbar" aria-label="Presentation controls">
                 <div class="btn-group" role="group">
-                  <button id="height-dropdown" type="button" class="btn btn-default dropdown-toggle hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Height <span class="caret"></span></button>
+                  <button id="height-dropdown" type="button" class="btn btn-default dropdown-toggle hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Change height of the chart">Height <span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li class="dropdown-header">Change chart height...</li>
                     <li><a id="chart-height-very-short" data-target="#">Much shorter</a></li>
@@ -49,11 +49,11 @@
                   </ul>
                 </div>
                 <div class="btn-group">
-                  <button id="next-btn" type="button" class="btn btn-default">Start</button>
+                  <button id="next-btn" type="button" class="btn btn-default" title="Advance to next slide">Start</button>
                 </div>
                 <div class="btn-group">
-                  <button id="autoplay-btn" type="button" class="btn btn-default">Start Autoplay</button>
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Autoplay Speed</span></button>
+                  <button id="autoplay-btn" type="button" class="btn btn-default" title="Automatically advance slides on a timer">Start Autoplay</button>
+                  <button id="autoplay-speed-menu" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Change speed at which autoplay runs"><span class="caret"></span><span class="sr-only">Autoplay Speed</span></button>
                   <ul class="dropdown-menu">
                     <li class="dropdown-header">Set autoplay speed...</li>
                     <li><a id="autoplay-speed-slow" data-target="#">Slow</a></li>
