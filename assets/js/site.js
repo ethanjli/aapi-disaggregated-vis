@@ -899,7 +899,7 @@ function initialInteractions() {
   document.getElementById("next-btn").innerHTML = "Next";
 }
 
-d3.select("#next-btn").on("click", function() {
+$("#next-btn").click(function() {
   if (this.innerHTML == "Start") initialInteractions();
   document.getElementById("next-btn").classList.add("disabled");
   document.getElementById("next-btn").disabled = "disabled";
@@ -926,7 +926,7 @@ function startAutoplay() {
   timer = makeAutoplayTimer();
 }
 
-d3.select("#autoplay-btn").on("click", startAutoplay);
+$("#autoplay-btn").click(startAutoplay);
 
 // Menu for autoplay speeds
 function setAutoplaySpeed(newDuration) {
@@ -941,36 +941,36 @@ function setAutoplaySpeed(newDuration) {
     startAutoplay();
   }
 }
-d3.select("#autoplay-speed-slow").on("click", function() {
+$("#autoplay-speed-slow").click(function() {
   setAutoplaySpeed(autoDurationSlow);
 });
-d3.select("#autoplay-speed-medium").on("click", function() {
+$("#autoplay-speed-medium").click(function() {
   setAutoplaySpeed(autoDurationMedium);
 });
-d3.select("#autoplay-speed-fast").on("click", function() {
+$("#autoplay-speed-fast").click(function() {
   setAutoplaySpeed(autoDurationFast);
 });
 
 // Menu for jumping between sections
-d3.select("#jump-aggregated-immigration").on("click", function() {
+$("#jump-aggregated-immigration").click(function() {
   if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
   if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
   document.getElementById("next-btn").innerHTML = "Next";
   timer = makeJumpTimer(0);
 });
-d3.select("#jump-aggregated-income").on("click", function() {
+$("#jump-aggregated-income").click(function() {
   if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
   if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
   document.getElementById("next-btn").innerHTML = "Next";
   timer = makeJumpTimer(8);
 });
-d3.select("#jump-disaggregated-income").on("click", function() {
+$("#jump-disaggregated-income").click(function() {
   if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
   if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
   document.getElementById("next-btn").innerHTML = "Next";
   timer = makeJumpTimer(13);
 });
-d3.select("#jump-disaggregated-poverty-rates").on("click", function() {
+$("#jump-disaggregated-poverty-rates").click(function() {
   if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
   if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
   document.getElementById("next-btn").innerHTML = "Next";
@@ -1007,19 +1007,19 @@ function setChartHeight(adjustmentClass) {
   chartHeightAdjustmentClass = adjustmentClass;
   chart.resize({"height": calculateHeight(chartHeightClass, chartHeightAdjustmentClass)});
 }
-d3.select("#chart-height-very-short").on("click", function() {
+$("#chart-height-very-short").click(function() {
   setChartHeight("much shorter");
 });
-d3.select("#chart-height-short").on("click", function() {
+$("#chart-height-short").click(function() {
   setChartHeight("shorter");
 });
-d3.select("#chart-height-default").on("click", function() {
+$("#chart-height-default").click(function() {
   setChartHeight("default");
 });
-d3.select("#chart-height-tall").on("click", function() {
+$("#chart-height-tall").click(function() {
   setChartHeight("taller");
 });
-d3.select("#chart-height-very-tall").on("click", function() {
+$("#chart-height-very-tall").click(function() {
   setChartHeight("much taller");
 });
 

@@ -8,7 +8,7 @@ The model minority stereotype became popular in the 1960s and 1970s, the era of 
 This project was built using:
 * [Bootstrap](getbootstrap.com/) for layout and styles.
 * [jQuery](http://jquery.com/) for some interactions.
-* [D3.js](http://d3js.org/) and [C3.js](http://c3js.org/) for interactive data visualization.
+* [C3.js](http://c3js.org/) for interactive data visualization.
 
 ## Data Sources
 This project compiles and visualizes data from:
