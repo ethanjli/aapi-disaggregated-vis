@@ -1,4 +1,4 @@
-var datasets = [{
+var aapiDatasets = [{
   "name": "Aggregate immigration by numbers",
   "source": "Figure 2.3 of https://cdn.americanprogress.org/wp-content/uploads/2014/04/AAPI-Immigration1.pdf",
   "rows": [
@@ -88,7 +88,7 @@ var datasets = [{
     ["Total Population", 29.188, 19, 14, 20, 18, 51, 19, null, null]
   ]
 }];
-var groupings = [{
+var aapiGroupings = [{
   "name": "Immigration categories",
   "groups": [
     ["Family-sponsored", "Employment-based", "Immediate relatives of U.S. citizens", "Diversity", "Refugees and asylees", "Other"]
@@ -103,27 +103,27 @@ var groupings = [{
 }];
 
 // Charts
-var charts = [{
+var aapiCharts = [{
   "x": "continent of birth",
-  "rows": datasets[0].rows,
+  "rows": aapiDatasets[0].rows,
   "type": "bar",
   "selection": {
     "enabled": true
   },
-  "groups": groupings[0].groups,
+  "groups": aapiGroupings[0].groups,
   "order": "null"
 }, {
   "x": "continent of birth",
-  "rows": datasets[1].rows,
+  "rows": aapiDatasets[1].rows,
   "type": "bar",
   "selection": {
     "enabled": true
   },
-  "groups": groupings[0].groups,
+  "groups": aapiGroupings[0].groups,
   "order": "null"
 }, {
   "x": "race",
-  "rows": datasets[2].rows,
+  "rows": aapiDatasets[2].rows,
   "type": "bar",
   "selection": {
     "enabled": true
@@ -131,22 +131,22 @@ var charts = [{
   "unload": true
 }, {
   "x": "race",
-  "rows": datasets[3].rows,
+  "rows": aapiDatasets[3].rows,
   "type": "bar",
   "selection": {
     "enabled": true
   }
 }, {
   "x": "ethnicity",
-  "rows": datasets[4].rows,
+  "rows": aapiDatasets[4].rows,
   "type": "bar",
   "selection": {
     "enabled": true
   },
-  "groups": groupings[1].groups
+  "groups": aapiGroupings[1].groups
 }];
 
-var axes = [{
+var aapiAxes = [{
   "x": {
     "type": "category",
     "label": {
@@ -247,7 +247,7 @@ var axes = [{
   }
 }];
 
-var tooltips = [{
+var aapiTooltips = [{
   "format": {
     "value": function(value, ratio, id) {
       return value + "k people";
@@ -274,7 +274,7 @@ var tooltips = [{
   }
 }];
 
-var regions = [
+var aapiRegions = [
   [{
     "axis": "x",
     "start": -0.5,
@@ -290,7 +290,7 @@ var regions = [
   }]
 ];
 
-var geographicalRegionGrid = {
+var aapiGeographicalRegionGrid = {
   "lines": [{
     "value": 4.5,
     "text": "South Asian"
@@ -312,8 +312,8 @@ var geographicalRegionGrid = {
   }]
 };
 
-var grids = [{
-  "x": geographicalRegionGrid,
+var aapiGrids = [{
+  "x": aapiGeographicalRegionGrid,
   "y": {
     "lines": [{
       "value": 42.052,
@@ -334,7 +334,7 @@ var grids = [{
     }]
   }
 }, {
-  "x": geographicalRegionGrid,
+  "x": aapiGeographicalRegionGrid,
   "y": {
     "lines": [{
       "value": 20,
@@ -363,7 +363,7 @@ var grids = [{
     }]
   }
 }, {
-  "x": geographicalRegionGrid,
+  "x": aapiGeographicalRegionGrid,
   "y": {
     "lines": [{
       "value": 8,
@@ -388,7 +388,7 @@ var grids = [{
     }]
   }
 }, {
-  "x": geographicalRegionGrid,
+  "x": aapiGeographicalRegionGrid,
   "y": {
     "lines": [{
       "value": 7,
@@ -413,7 +413,7 @@ var grids = [{
     }]
   }
 }, {
-  "x": geographicalRegionGrid,
+  "x": aapiGeographicalRegionGrid,
   "y": {
     "lines": [{
       "value": 52,
@@ -439,159 +439,237 @@ var grids = [{
   }
 }];
 
-var chartHeights = [{
-	"name": "short",
-  "height": 500,
-  "adjustments": {
-  	"much shorter": -200,
-    "shorter": -100,
-    "default": 0,
-    "taller": 100,
-    "much taller": 300
+var aapiVis = {
+  "autoDurations": {
+    "slow": 12000,
+    "medium": 6000,
+    "fast": 1000
+  },
+  "manualDuration": 500,
+  "autoDuration": 6000,
+  "timer": null,
+  "chart": null,
+  "chartHeights": [{
+    "name": "short",
+    "height": 500,
+    "adjustments": {
+      "much shorter": -200,
+      "shorter": -100,
+      "default": 0,
+      "taller": 100,
+      "much taller": 300
+    }
+  }, {
+    "name": "tall",
+    "height": 500,
+    "adjustments": {
+      "much shorter": -200,
+      "shorter": -100,
+      "default": 0,
+      "taller": 300,
+      "much taller": 500
+    }
+  }],
+  "chartHeightClass": 0,
+  "chartHeightAdjustmentClass": "default",
+  "currentIndex": 0,
+  "calculateHeight": function() {
+    return this.chartHeights[this.chartHeightClass].height + this.chartHeights[this.chartHeightClass].adjustments[this.chartHeightAdjustmentClass];
+  },
+  "setChartHeight": function(adjustmentClass) {
+    this.chartHeightAdjustmentClass = adjustmentClass;
+    this.chart.resize({"height": this.calculateHeight()});
+  },
+  "makeNote": function(text, note) {
+    return '<a href="#" data-toggle="tooltip" data-placement="top" title="' + note + '">' + text + "</a>";
+  },
+  "setTitle": function(title) {
+    document.getElementById("aapi-chart-title").innerHTML = title + ' <span class="caret"></span>';
+  },
+  "setMessage": function(message) {
+    document.getElementById("aapi-chart-message").innerHTML = message;
+  },
+  "setReference": function(reference) {
+    document.getElementById("aapi-reference").innerHTML = "Source: " + reference;
+  },
+  "initialInteractions": function() {
+    document.getElementById("aapi-chart-message").classList.remove("hidden");
+    document.getElementById("aapi-height-dropdown").classList.remove("hidden");
+    document.getElementById("aapi-next-btn").innerHTML = "Next";
+  },
+  "startAutoplay": function() {
+    var autoplayBtn = document.getElementById("aapi-autoplay-btn");
+    if (autoplayBtn.innerHTML == "Start Autoplay") this.initialInteractions();
+    if (autoplayBtn.innerHTML == "Pause Autoplay") {
+      aapiVis.pauseTour();
+      autoplayBtn.innerHTML = "Resume Autoplay";
+      return;
+    }
+    autoplayBtn.innerHTML = "Pause Autoplay";
+    document.getElementById("aapi-next-btn").classList.add("disabled");
+    document.getElementById("aapi-next-btn").disabled = "disabled";
+    this.makeAutoplayTimer();
+  },
+  "setAutoplaySpeed": function(newDuration) {
+    this.autoDuration = newDuration;
+    if (document.getElementById("aapi-autoplay-btn").innerHTML == "Pause Autoplay") {
+      aapiVis.pauseTour();
+      document.getElementById("aapi-next-btn").classList.add("disabled");
+      document.getElementById("aapi-next-btn").disabled = "disabled";
+      document.getElementById("aapi-autoplay-btn").innerHTML = "Pause Autoplay";
+      this.makeAutoplayTimer();
+    } else {
+      this.startAutoplay();
+    }
+  },
+  "makeJumpTimer": function(targetIndex) {
+    var aapiVis = this;
+    this.timer = setInterval(function() {
+      aapiVis.currentIndex = targetIndex;
+      if (aapiSlides[aapiVis.currentIndex++]()) aapiVis.pauseTour();
+    }, this.manualDuration);
+  },
+  "makeAutoplayTimer": function() {
+    var aapiVis = this;
+    this.timer = setInterval(function() {
+      if (aapiVis.currentIndex == aapiSlides.length) aapiVis.currentIndex = 0;
+      aapiSlides[aapiVis.currentIndex++]();
+      document.getElementById("aapi-next-btn").innerHTML = "Next";
+    }, this.autoDuration);
+  },
+  "pauseTour": function() {
+    clearInterval(this.timer);
+    document.getElementById("aapi-next-btn").classList.remove("disabled");
+    document.getElementById("aapi-next-btn").disabled = "";
+    document.getElementById("aapi-autoplay-btn").classList.remove("disabled");
+    document.getElementById("aapi-autoplay-btn").disabled = "";
+    var autoplayButton = document.getElementById("aapi-autoplay-btn");
+    if (autoplayButton.innerHTML == "Pause Autoplay") autoplayButton.innerHTML = "Resume Autoplay";
   }
-}, {
-	"name": "tall",
-  "height": 500,
-  "adjustments": {
-  	"much shorter": -200,
-    "shorter": -100,
-    "default": 0,
-    "taller": 300,
-    "much taller": 500
-  }
-}];
-function calculateHeight(heightClass, adjustmentClass) {
-	return chartHeights[heightClass].height + chartHeights[heightClass].adjustments[adjustmentClass];
-}
+};
 
-var defaultMessage = document.getElementById("chart-message").innerHTML,
-  manualDuration = 500,
-  autoDurationSlow = 12000, autoDurationMedium = 6000, autoDurationFast = 1000,
-  timer, autoDuration = autoDurationMedium,
-  chartHeightClass = 0,
-	chartHeightAdjustmentClass = "default",
-  chart;
-
-var currentIndex = 0,
-  slides = [
+var aapiSlides = [
     function() { // 0
-      setTitle("Aggregated Immigration");
-      chartHeightClass = 0;
-      chart = c3.generate({
-        "data": charts[0],
-        "axis": axes[0],
+      aapiVis.setTitle("Aggregated Immigration");
+      aapiVis.chartHeightClass = 0;
+      aapiVis.chart = c3.generate({
+        "bindto": "#aapi-chart",
+        "data": aapiCharts[0],
+        "axis": aapiAxes[0],
         "size": {
-        	"height": calculateHeight(chartHeightClass, chartHeightAdjustmentClass)
+          "height": aapiVis.calculateHeight()
         }
       });
-      setMessage("To contextualize AAPI socioeconomic metrics, let's first examine US immigration patterns recorded in 2012.");
-      setReference('U.S. Department of Homeland Security, <a href="https://www.dhs.gov/yearbook-immigration-statistics-2012-legal-permanent-residents">"Yearbook of Immigration Statistics: 2012"</a>. Data here was presented in Figure 2.3 of the Center for American Progress\'s <a href="https://www.americanprogress.org/issues/race/report/2014/04/23/87520/state-of-asian-americans-and-pacific-islanders-series/">"State of Asian Americans and Pacific Islanders Series"</a> report by Karthick Ramakrishnan and Farah Z. Ahmad.');
+      aapiVis.setMessage("To contextualize AAPI socioeconomic metrics, let's first examine US immigration patterns recorded in 2012.");
+      aapiVis.setReference('U.S. Department of Homeland Security, <a href="https://www.dhs.gov/yearbook-immigration-statistics-2012-legal-permanent-residents">"Yearbook of Immigration Statistics: 2012"</a>. Data here was presented in Figure 2.3 of the Center for American Progress\'s <a href="https://www.americanprogress.org/issues/race/report/2014/04/23/87520/state-of-asian-americans-and-pacific-islanders-series/">"State of Asian Americans and Pacific Islanders Series"</a> report by Karthick Ramakrishnan and Farah Z. Ahmad.');
       return true;
     },
 
     function() { // 1
-      chart.regions([{
+      aapiVis.chart.regions([{
         "start": -0.5,
         "end": 0.5,
         "class": "continent-asia"
       }]);
-      setMessage("Immigrants born in Asia constitute the largest population that obtains " + makeNote("legal permanent resident status", "An immigrant who holds a green card and is not a US citizen.") + " in the US...");
+      aapiVis.setMessage("Immigrants born in Asia constitute the largest population that obtains " + aapiVis.makeNote("legal permanent resident status", "An immigrant who holds a green card and is not a US citizen.") + " in the US...");
       return true;
     },
 
     function() { // 2
-      chart.focus("Employment-based");
-      setMessage("...and the largest population of immigrants who attain this status through " + makeNote("employer sponsorship", "Immigrant visas with employer sponsorship favor immigrants with high levels of expertise or ability within their field, immigrants with advanced degrees, professionals, skilled workers, and investors. These are the elites of their countries of origin.") + ".");
+      aapiVis.chart.focus("Employment-based");
+      aapiVis.setMessage("...and the largest population of immigrants who attain this status through " + aapiVis.makeNote("employer sponsorship", "Immigrant visas with employer sponsorship favor immigrants with high levels of expertise or ability within their field, immigrants with advanced degrees, professionals, skilled workers, and investors. These are the elites of their countries of origin.") + ".");
       return true;
     },
 
     function() { // 3
-      chart.revert();
-      chart.focus("Refugees and asylees");
-      setMessage("Asians also make up the largest share of refugee and asylum cases in the US.");
+      aapiVis.chart.revert();
+      aapiVis.chart.focus("Refugees and asylees");
+      aapiVis.setMessage("Asians also make up the largest share of refugee and asylum cases in the US.");
       return true;
     },
 
     function() { // 4
-      chart.revert();
-      setTitle("Aggregated Immigration: Percentages");
-      chart.load(charts[1]);
-      chart.axis.labels({
+      aapiVis.chart.revert();
+      aapiVis.setTitle("Aggregated Immigration: Percentages");
+      aapiVis.chart.load(aapiCharts[1]);
+      aapiVis.chart.axis.labels({
         "y": "Percentage"
       });
-      chart = c3.generate({
-        "tooltip": tooltips[1]
+      aapiVis.chart = c3.generate({
+        "bindto": "#aapi-chart",
+        "tooltip": aapiTooltips[1]
       });
-      setMessage("Let's look at the proportions of the groups from each continent of birth.");
+      aapiVis.setMessage("Let's look at the proportions of the groups from each continent of birth.");
       return true;
     },
 
     function() { // 5
-      chart.focus("Employment-based");
-      chart.regions.add([{
+      aapiVis.chart.focus("Employment-based");
+      aapiVis.chart.regions.add([{
         "axis": "x",
         "start": 3.5,
         "end": 5.5,
         "class": "continent-comparison"
       }]);
-      setMessage("Asia is comparable to Europe and Oceania in the percentage of immigrants born there who become permanent US residents through employer sponsorship...");
+      aapiVis.setMessage("Asia is comparable to Europe and Oceania in the percentage of immigrants born there who become permanent US residents through employer sponsorship...");
       return true;
     },
 
     function() { // 6
-      chart.regions.remove({
+      aapiVis.chart.regions.remove({
         "classes": ["continent-comparison"]
       });
-      chart.revert();
+      aapiVis.chart.revert();
       return false;
     },
 
     function() { // 7
-      chart.regions.add([{
+      aapiVis.chart.regions.add([{
         "axis": "x",
         "start": 1.5,
         "end": 2.5,
         "class": "continent-comparison"
       }]);
-      chart.focus("Refugees and asylees");
-      setMessage("...and the percentage of Asian immigrants who are refugees is just behind that of African immigrants.");
+      aapiVis.chart.focus("Refugees and asylees");
+      aapiVis.setMessage("...and the percentage of Asian immigrants who are refugees is just behind that of African immigrants.");
       return true;
     },
 
     function() { // 8
-      setTitle("Aggregated Income");
-      chartHeightClass = 0;
-      chart = c3.generate({
-        "data": charts[2],
-        "axis": axes[1],
-        "tooltip": tooltips[2],
+      aapiVis.setTitle("Aggregated Income");
+      aapiVis.chartHeightClass = 0;
+      aapiVis.chart = c3.generate({
+        "bindto": "#aapi-chart",
+        "data": aapiCharts[2],
+        "axis": aapiAxes[1],
+        "tooltip": aapiTooltips[2],
         "size": {
-        	"height": calculateHeight(chartHeightClass, chartHeightAdjustmentClass)
+          "height": aapiVis.calculateHeight()
         }
       });
-      setMessage("Now that we have a sense of what kinds of AAPI people are selected for by U.S. immigration policy relative to other groups, let's compare median income by race.");
-      setReference('U.S. Census Bureau, <a href="https://www.census.gov/hhes/www/poverty/data/#cps">"Income and Poverty in the United States: 2014"</a> report by Carmen DeNavas-Walt and Bernadette D. Proctor, based on information collected from the Current Population Survey Annual Social and Economic Supplement.');
+      aapiVis.setMessage("Now that we have a sense of what kinds of AAPI people are selected for by U.S. immigration policy relative to other groups, let's compare median income by race.");
+      aapiVis.setReference('U.S. Census Bureau, <a href="https://www.census.gov/hhes/www/poverty/data/#cps">"Income and Poverty in the United States: 2014"</a> report by Carmen DeNavas-Walt and Bernadette D. Proctor, based on information collected from the Current Population Survey Annual Social and Economic Supplement.');
       return true;
     },
 
     function() { // 9
-      chart.select(["Median household income"], [0]);
-      setMessage("At first glance, Asian Americans appear to be doing better than any other racial group.");
+      aapiVis.chart.select(["Median household income"], [0]);
+      aapiVis.setMessage("At first glance, Asian Americans appear to be doing better than any other racial group.");
       return true;
     },
 
     function() { // 10
-      chart.unselect();
-      setTitle("Aggregated Income: Per capita");
-      chart.load(charts[3]);
-      chart.focus("Per capita income");
-      setMessage("But if we account for the fact that AAPI households tend to be larger and have more workers...");
-      setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Table B19301. Data here was presented on p. 20 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
+      aapiVis.chart.unselect();
+      aapiVis.setTitle("Aggregated Income: Per capita");
+      aapiVis.chart.load(aapiCharts[3]);
+      aapiVis.chart.focus("Per capita income");
+      aapiVis.setMessage("But if we account for the fact that AAPI households tend to be larger and have more workers...");
+      aapiVis.setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Table B19301. Data here was presented on p. 20 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
       return true;
     },
 
     function() { // 11
-      chart.ygrids.add([{
+      aapiVis.chart.ygrids.add([{
         "value": 42.052,
         "text": "Per capita income for non-Hispanic Whites",
         "position": "middle"
@@ -600,137 +678,139 @@ var currentIndex = 0,
     },
 
     function() { // 12
-      chart.select(["Per capita income"], [0]);
-      setMessage("...then Asian Americans earn less than whites.");
+      aapiVis.chart.select(["Per capita income"], [0]);
+      aapiVis.setMessage("...then Asian Americans earn less than whites.");
       return true;
     },
 
     function() { // 13
-      setTitle("Disaggregated Income");
-      chartHeightClass = 1;
-      chart = c3.generate({
-        "data": charts[4],
-        "axis": axes[2],
-        "tooltip": tooltips[3],
-        "regions": regions[0],
-        "grid": grids[0],
+      aapiVis.setTitle("Disaggregated Income");
+      aapiVis.chartHeightClass = 1;
+      aapiVis.chart = c3.generate({
+        "bindto": "#aapi-chart",
+        "data": aapiCharts[4],
+        "axis": aapiAxes[2],
+        "tooltip": aapiTooltips[3],
+        "regions": aapiRegions[0],
+        "grid": aapiGrids[0],
         "zoom": {
           "enabled": true
         },
         "size": {
-        	"height": calculateHeight(chartHeightClass, chartHeightAdjustmentClass)
+          "height": aapiVis.calculateHeight()
         }
       });
-      chart.hide(["Low-income (above poverty) rate", "Poverty rate", "Limited English proficient rate", "Uninsured rate", "High school degree but no Bachelor's degree over age 25 rate", "No high school degree over age 25 rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
+      aapiVis.chart.hide(["Low-income (above poverty) rate", "Poverty rate", "Limited English proficient rate", "Uninsured rate", "High school degree but no Bachelor's degree over age 25 rate", "No high school degree over age 25 rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
         "withLegend": true
       });
-      setMessage("Let's look at the AAPI subgroups to see how their per capita incomes compare to each other and to other ethnic groups in California.");
-      setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B19301. Data here was presented on p. 20 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
+      aapiVis.setMessage("Let's look at the AAPI subgroups to see how their per capita incomes compare to each other and to other ethnic groups in California.");
+      aapiVis.setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B19301. Data here was presented on p. 20 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
       return true;
     },
 
     function() { // 14
-      chart.select(["Per capita income"], [5, 6, 7, 14, 19, 20]);
-      setMessage("6 of the 24 displayed AAPI ethnic groups have median incomes at least as low as the approximate aggregate median income of Latinos.");
+      aapiVis.chart.select(["Per capita income"], [5, 6, 7, 14, 19, 20]);
+      aapiVis.setMessage("6 of the 24 displayed AAPI ethnic groups have median incomes at least as low as the approximate aggregate median income of Latinos.");
       return true;
     },
 
     function() { // 15
-      chart.unselect();
-      chart.select(["Per capita income"], [0, 1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 19, 20, 21, 22, 23]);
-      setMessage("18 of the 24 displayed AAPI ethnic groups, including all Pacific Islander and Mainland Southeast Asian groups, have median incomes lower than Asian Americans in aggregate.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Per capita income"], [0, 1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 19, 20, 21, 22, 23]);
+      aapiVis.setMessage("18 of the 24 displayed AAPI ethnic groups, including all Pacific Islander and Mainland Southeast Asian groups, have median incomes lower than Asian Americans in aggregate.");
       return true;
     },
 
     function() { // 16
-      chart.unselect();
-      chart.select(["Per capita income"], [3, 4, 8, 9, 10, 13, 15, 16, 17, 18, 21, 22, 23]);
-      setMessage("From each region of origin, some AAPI ethnic groups earn relatively much more than other ethnic groups from the same region. Thus, aggregating data by region of origin hides valuable information.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Per capita income"], [3, 4, 8, 9, 10, 13, 15, 16, 17, 18, 21, 22, 23]);
+      aapiVis.setMessage("From each region of origin, some AAPI ethnic groups earn relatively much more than other ethnic groups from the same region. Thus, aggregating data by region of origin hides valuable information.");
       return true;
     },
 
     function() { // 17
-      chart.unselect();
-      chart.select(["Per capita income"], [4, 5, 24, 29]);
-      setMessage("The highest median income of any displayed AAPI ethnic group is over 4 times that of the lowest median income. For comparison, the median income of whites is 2.8 times the median income of Latinos.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Per capita income"], [4, 5, 24, 29]);
+      aapiVis.setMessage("The highest median income of any displayed AAPI ethnic group is over 4 times that of the lowest median income. For comparison, the median income of whites is 2.8 times the median income of Latinos.");
       return true;
     },
 
     function() { // 18
-      setTitle("Poverty and Education");
-      chartHeightClass = 1;
-      chart = c3.generate({
-        "data": charts[4],
-        "axis": axes[3],
-        "tooltip": tooltips[3],
-        "regions": regions[0],
-        "grid": grids[2],
+      aapiVis.setTitle("Poverty and Education");
+      aapiVis.chartHeightClass = 1;
+      aapiVis.chart = c3.generate({
+        "bindto": "#aapi-chart",
+        "data": aapiCharts[4],
+        "axis": aapiAxes[3],
+        "tooltip": aapiTooltips[3],
+        "regions": aapiRegions[0],
+        "grid": aapiGrids[2],
         "zoom": {
           "enabled": true
         },
         "size": {
-        	"height": calculateHeight(chartHeightClass, chartHeightAdjustmentClass)
+          "height": aapiVis.calculateHeight()
         }
       });
-      chart.hide(["Per capita income", "Low-income (above poverty) rate", "Limited English proficient rate", "Uninsured rate", "High school degree but no Bachelor's degree over age 25 rate", "No high school degree over age 25 rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
+      aapiVis.chart.hide(["Per capita income", "Low-income (above poverty) rate", "Limited English proficient rate", "Uninsured rate", "High school degree but no Bachelor's degree over age 25 rate", "No high school degree over age 25 rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
         "withLegend": true
       });
-      setMessage("Now let's examine another socioeconomic metric, the proportion of each ethnicity that earns less than the " + makeNote("federal poverty line", "The federal poverty line does not adjust for the high cost of living in California, especially in certain areas where AAPI individuals tend to live. Thus, these rates may not capture the full extent of poverty.") + ".");
-      setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B17001, and C17002. Data here was presented on p. 21 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
+      aapiVis.setMessage("Now let's examine another socioeconomic metric, the proportion of each ethnicity that earns less than the " + aapiVis.makeNote("federal poverty line", "The federal poverty line does not adjust for the high cost of living in California, especially in certain areas where AAPI individuals tend to live. Thus, these rates may not capture the full extent of poverty.") + ".");
+      aapiVis.setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B17001, and C17002. Data here was presented on p. 21 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
       return true;
     },
 
     function() { // 19
-      chart.unselect();
-      chart.select(["Poverty rate"], [5, 6, 14]);
-      setMessage("Over a quarter of all Hmong, Cambodian, and Mongolian Americans earn less than the federal poverty line.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Poverty rate"], [5, 6, 14]);
+      aapiVis.setMessage("Over a quarter of all Hmong, Cambodian, and Mongolian Americans earn less than the federal poverty line.");
       return true;
     },
 
     function() { // 20
-      chart.unselect();
-      chart.focus(["Poverty rate"]);
-      chart.select(["Poverty rate"], [0, 1, 2, 3, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 22, 23]);
-      setMessage("AAPI ethnic groups are spread across the range of rates covered by the aggregate racial groups...");
+      aapiVis.chart.unselect();
+      aapiVis.chart.focus(["Poverty rate"]);
+      aapiVis.chart.select(["Poverty rate"], [0, 1, 2, 3, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 22, 23]);
+      aapiVis.setMessage("AAPI ethnic groups are spread across the range of rates covered by the aggregate racial groups...");
       return true;
     },
 
 
     function() { // 21
-      chart.unselect();
-      chart.select(["Poverty rate"], [4, 5, 6, 12, 13, 14, 21]);
-      setMessage("...and beyond it, with very large differences between the highest rates and the lowest rates.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Poverty rate"], [4, 5, 6, 12, 13, 14, 21]);
+      aapiVis.setMessage("...and beyond it, with very large differences between the highest rates and the lowest rates.");
       return true;
     },
 
 
     function() { // 22
-      chart.unselect();
-      chart.select(["Poverty rate"], [0, 4, 5, 10, 14, 17, 19, 21]);
-      setMessage("Large disparities exist within each geographical region of origin: in most regions, the highest and lowest rates differ by a factor of at least 2.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Poverty rate"], [0, 4, 5, 10, 14, 17, 19, 21]);
+      aapiVis.setMessage("Large disparities exist within each geographical region of origin: in most regions, the highest and lowest rates differ by a factor of at least 2.");
       return true;
     },
 
     function() { // 23
-      chart.unselect();
-      setTitle("Poverty and Education: Secondary Education");
-      chart.axis.range({
+      aapiVis.chart.unselect();
+      aapiVis.setTitle("Poverty and Education: Secondary Education");
+      aapiVis.chart.axis.range({
         "max": {
           "y": 40
         }
       });
-      chart.show(["No high school degree over age 25 rate"], {
+      aapiVis.chart.show(["No high school degree over age 25 rate"], {
         "withLegend": true
       });
-      chart.ygrids(grids[3].y.lines);
-      setMessage("Among individuals 25 years and older, the likelihood that members of AAPI ethnic groups lack high school degrees roughly corresponds to the poverty rates of the various groups, but there are exceptions.");
-      setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B17001, C17002, and B15002. Data here was presented on pp. 18-21 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
+      aapiVis.chart.ygrids(aapiGrids[3].y.lines);
+      aapiVis.setMessage("Among individuals 25 years and older, the likelihood that members of AAPI ethnic groups lack high school degrees roughly corresponds to the poverty rates of the various groups, but there are exceptions.");
+      aapiVis.setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B17001, C17002, and B15002. Data here was presented on pp. 18-21 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
       return true;
     },
 
     function() { // 24
-      chart.unselect();
-      chart.axis.range({
+      aapiVis.chart.unselect();
+      aapiVis.chart.axis.range({
         "min": {
           "x": 5
         },
@@ -738,27 +818,27 @@ var currentIndex = 0,
           "x": 13.1
         }
       });
-      setMessage("Let's take a closer look at Southeast Asian Americans.");
+      aapiVis.setMessage("Let's take a closer look at Southeast Asian Americans.");
       return true;
     },
 
     function() { // 25
-      chart.unselect();
-      chart.select(["No high school degree over age 25 rate"], [5, 6, 7, 8]);
-      setMessage("These 4 groups have very high rates of high school non-completion among individuals born before 1990. Not coincidentally, these were groups displaced as refugees following the Vietnam War.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["No high school degree over age 25 rate"], [5, 6, 7, 8]);
+      aapiVis.setMessage("These 4 groups have very high rates of high school non-completion among individuals born before 1990. Not coincidentally, these were groups displaced as refugees following the Vietnam War.");
       return true;
     },
 
     function() { // 26
-      chart.unselect();
-      chart.select(["Poverty rate"], [5, 6, 7, 8]);
-      setMessage("Despite such a similarity, these groups have very different poverty rates: the rate for Hmong Americans is more than twice that for Vietnamese Americans.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["Poverty rate"], [5, 6, 7, 8]);
+      aapiVis.setMessage("Despite such a similarity, these groups have very different poverty rates: the rate for Hmong Americans is more than twice that for Vietnamese Americans.");
       return true;
     },
 
     function() { // 27
-      chart.unselect();
-      chart.axis.range({
+      aapiVis.chart.unselect();
+      aapiVis.chart.axis.range({
         "min": {
           "x": 5
         },
@@ -766,13 +846,13 @@ var currentIndex = 0,
           "x": 13.1
         }
       });
-      setMessage("Southeast Asian Americans from different ethnic groups face different disparities and have needs that must be addressed specifically.");
+      aapiVis.setMessage("Southeast Asian Americans from different ethnic groups face different disparities and have needs that must be addressed specifically.");
       return true;
     },
 
     function() { // 28
-      chart.unselect();
-      chart.axis.range({
+      aapiVis.chart.unselect();
+      aapiVis.chart.axis.range({
         "min": {
           "x": 14
         },
@@ -780,56 +860,56 @@ var currentIndex = 0,
           "x": 18.1
         }
       });
-      setMessage("All displayed East Asian ethnic groups have cultures with Confucian influences, but they do not finish high school at similar rates.");
+      aapiVis.setMessage("All displayed East Asian ethnic groups have cultures with Confucian influences, but they do not finish high school at similar rates.");
       return true;
     },
 
     function() { // 29
-      chart.unselect();
-      chart.select(["No high school degree over age 25 rate"], [16, 18]);
-      setMessage("Chinese and Taiwanese Americans have many shared cultural characteristics, yet Chinese Americans are 3 times as likely to lack a high school degree.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["No high school degree over age 25 rate"], [16, 18]);
+      aapiVis.setMessage("Chinese and Taiwanese Americans have many shared cultural characteristics, yet Chinese Americans are 3 times as likely to lack a high school degree.");
       return true;
     },
 
     function() { // 30
-      chart.unselect();
-      chart.show(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
+      aapiVis.chart.unselect();
+      aapiVis.chart.show(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
         "withLegend": true
       });
       return false;
     },
 
     function() { // 31
-      chart.focus(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees", "No high school degree over age 25 rate"]);
-      chart.select(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], [16, 18]);
-      setMessage("We might explain this difference by noting that many recent Chinese immigrants are refugees or asylees, while no Taiwanese immigrants are refugees or asylees &ndash; immigration patterns shape socioeconomic outcomes.");
-      setReference('U.S. Department of Homeland Security, <a href="http://www.dhs.gov/publication/yearbook-immigration-statistics-2012-legal-permanent-residents">Yearbook of Immigration Statistics: 2012 Legal Permanent Residents</a>, Table 10.');
+      aapiVis.chart.focus(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees", "No high school degree over age 25 rate"]);
+      aapiVis.chart.select(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], [16, 18]);
+      aapiVis.setMessage("We might explain this difference by noting that many recent Chinese immigrants are refugees or asylees, while no Taiwanese immigrants are refugees or asylees &ndash; immigration patterns shape socioeconomic outcomes.");
+      aapiVis.setReference('U.S. Department of Homeland Security, <a href="http://www.dhs.gov/publication/yearbook-immigration-statistics-2012-legal-permanent-residents">Yearbook of Immigration Statistics: 2012 Legal Permanent Residents</a>, Table 10.');
       return true;
     },
 
     function() { // 32
-      chart.unselect();
-      chart.focus(["Percentage of 2012 immigrants refugees or asylees", "Poverty rate"]);
-      chart.select(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], [14]);
-      setMessage("We also see that many Mongolian Americans who obtained their green cards in 2012 entered as refugees or asylees, which may explain their high poverty rate.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.focus(["Percentage of 2012 immigrants refugees or asylees", "Poverty rate"]);
+      aapiVis.chart.select(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], [14]);
+      aapiVis.setMessage("We also see that many Mongolian Americans who obtained their green cards in 2012 entered as refugees or asylees, which may explain their high poverty rate.");
       return true;
     },
 
     function() { // 33
-      chart.unselect();
-      chart.show(["High school degree but no Bachelor's degree over age 25 rate", "No high school degree over age 25 rate"], {
+      aapiVis.chart.unselect();
+      aapiVis.chart.show(["High school degree but no Bachelor's degree over age 25 rate", "No high school degree over age 25 rate"], {
         "withLegend": true
       });
-      chart.hide(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees", "Poverty rate", "Low-income (above poverty) rate"], {
+      aapiVis.chart.hide(["Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees", "Poverty rate", "Low-income (above poverty) rate"], {
         "withLegend": true
       });
-      setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B17001, C17002, and B15002. Data here was presented on pp. 18-21 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
+      aapiVis.setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates, Tables B17001, C17002, and B15002. Data here was presented on pp. 18-21 of Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
       return false;
     },
 
     function() { // 34
-      setTitle("Poverty and Education: Higher Education");
-      chart.axis.range({
+      aapiVis.setTitle("Poverty and Education: Higher Education");
+      aapiVis.chart.axis.range({
         "min": {
           "x": 0
         },
@@ -838,205 +918,130 @@ var currentIndex = 0,
           "y": 90
         }
       });
-      chart.focus(["No high school degree over age 25 rate", "High school degree but no Bachelor's degree over age 25 rate"]);
-      chart.ygrids(grids[4].y.lines);
-      setMessage("Now let's examine disparities in access to undergraduate education.");
+      aapiVis.chart.focus(["No high school degree over age 25 rate", "High school degree but no Bachelor's degree over age 25 rate"]);
+      aapiVis.chart.ygrids(aapiGrids[4].y.lines);
+      aapiVis.setMessage("Now let's examine disparities in access to undergraduate education.");
       return true;
     },
 
     function() { // 35
-      chart.unselect();
-      chart.select(["No high school degree over age 25 rate", "High school degree but no Bachelor's degree over age 25 rate"], [19, 20, 21, 22, 23, 28]);
-      setMessage("While Pacific Islanders lack high school degrees at rates comparable to the aggregate rate for Asian Americans, they lack Bachelor's degrees at disproportionately high rates.");
+      aapiVis.chart.unselect();
+      aapiVis.chart.select(["No high school degree over age 25 rate", "High school degree but no Bachelor's degree over age 25 rate"], [19, 20, 21, 22, 23, 28]);
+      aapiVis.setMessage("While Pacific Islanders lack high school degrees at rates comparable to the aggregate rate for Asian Americans, they lack Bachelor's degrees at disproportionately high rates.");
       return true;
     },
 
     function() { // 36
-      chart.select(["No high school degree over age 25 rate", "High school degree but no Bachelor's degree over age 25 rate"], [4, 5, 6, 7, 18, 19, 20, 21, 22, 23]);
-      setMessage("The proportion of Hmong Americans, Cambodian Americans, Laotian Americans, and all Pacific Islanders without Bachelor's degrees is almost three times the proportion of Indian Americans and Taiwanese Americans without Bachelor's degrees &ndash; a huge disparity.");
+      aapiVis.chart.select(["No high school degree over age 25 rate", "High school degree but no Bachelor's degree over age 25 rate"], [4, 5, 6, 7, 18, 19, 20, 21, 22, 23]);
+      aapiVis.setMessage("The proportion of Hmong Americans, Cambodian Americans, Laotian Americans, and all Pacific Islanders without Bachelor's degrees is almost three times the proportion of Indian Americans and Taiwanese Americans without Bachelor's degrees &ndash; a huge disparity.");
       return true;
     },
 
     function() { // 37
-      chart.unselect();
-      chart.show(["Per capita income", "Poverty rate", "Low-income (above poverty) rate", "Limited English proficient rate", "Uninsured rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
+      aapiVis.chart.unselect();
+      aapiVis.chart.show(["Per capita income", "Poverty rate", "Low-income (above poverty) rate", "Limited English proficient rate", "Uninsured rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
         "withLegend": true
       });
-      chart.hide(["Per capita income", "Poverty rate", "Low-income (above poverty) rate", "Limited English proficient rate", "Uninsured rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
+      aapiVis.chart.hide(["Per capita income", "Poverty rate", "Low-income (above poverty) rate", "Limited English proficient rate", "Uninsured rate", "Percentage of 2012 immigrants employer-sponsored", "Percentage of 2012 immigrants refugees or asylees"], {
         "withLegend": false
       });
     },
 
     function() { // 38
-      chart.unselect();
-      setTitle("Poverty and Education: Conclusion");
-      setMessage('We saw that immigration policy selects for highly skilled and educated immigrants from Asia &ndash; those with attributes that fit (and promote) the model minority stereotype. We then explored several ways in which aggregate data on AAPI outcomes masks extreme disparities between AAPI ethnic groups and misrepresents the differing needs of Asian American and Pacific Islander communities. Further collection and analysis of disaggregated AAPI data, such as in higher education, deportation, and criminalization, is an important step in changing policies and redistributing resources to meet the needs of the most disenfranchised subgroups within the AAPI category. But these achievements <a href="http://reappropriate.co/2015/10/ca-gov-jerry-brown-vetoes-aapi-data-disaggregation-bill/">won\'t happen on their own</a>. Rather, we must organize within our communities to build a more equitable society for all indigenous peoples and people of color, including Pacific Islanders and Asian Americans.');
-      setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates. Data here was presented in Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
-      document.getElementById("next-btn").innerHTML = "Restart";
+      aapiVis.chart.unselect();
+      aapiVis.setTitle("Poverty and Education: Conclusion");
+      aapiVis.setMessage('We saw that immigration policy selects for highly skilled and educated immigrants from Asia &ndash; those with attributes that fit (and promote) the model minority stereotype. We then explored several ways in which aggregate data on AAPI outcomes masks extreme disparities between AAPI ethnic groups and misrepresents the differing needs of Asian American and Pacific Islander communities. Further collection and analysis of disaggregated AAPI data, such as in higher education, deportation, and criminalization, is an important step in changing policies and redistributing resources to meet the needs of the most disenfranchised subgroups within the AAPI category. But these achievements <a href="http://reappropriate.co/2015/10/ca-gov-jerry-brown-vetoes-aapi-data-disaggregation-bill/">won\'t happen on their own</a>. Rather, we must organize within our communities to build a more equitable society for all indigenous peoples and people of color, including Pacific Islanders and Asian Americans.');
+      aapiVis.setReference('U.S. Census Bureau, 2006-2010 American Community Survey 5-Year Estimates. Data here was presented in Asian Americans Advancing Justice, <a href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california">"A Community of Contrasts: Asian Americans, Native Hawaiians and Pacific Islanders in California, 2013"</a> report.');
+      document.getElementById("aapi-next-btn").innerHTML = "Restart";
       return true;
     }
   ];
 
-function makeNote(text, note) {
-  return '<a href="#" data-toggle="tooltip" data-placement="top" title="' + note + '">' + text + "</a>";
-}
-
-function setTitle(title) {
-  document.getElementById("chart-title").innerHTML = title + ' <span class="caret"></span>';
-}
-
-function setMessage(message) {
-  document.getElementById("chart-message").innerHTML = message;
-}
-
-function setReference(reference) {
-  document.getElementById("reference").innerHTML = "Source: " + reference;
-}
-
-function initialInteractions() {
-  document.getElementById("chart-message").classList.remove("hidden");
-  document.getElementById("height-dropdown").classList.remove("hidden");
-  document.getElementById("next-btn").innerHTML = "Next";
-}
-
-$("#next-btn").click(function() {
-  if (this.innerHTML == "Start") initialInteractions();
-  document.getElementById("next-btn").classList.add("disabled");
-  document.getElementById("next-btn").disabled = "disabled";
-  document.getElementById("autoplay-btn").classList.add("disabled");
-  document.getElementById("autoplay-btn").disabled = "disabled";
-  document.getElementById("next-btn").innerHTML = "Next";
-  timer = setInterval(function() {
-    if (currentIndex == slides.length) currentIndex = 0;
-    if (slides[currentIndex++]()) pauseDemo();
-  }, manualDuration);
+$("#aapi-next-btn").click(function() {
+  if (this.innerHTML == "Start") aapiVis.initialInteractions();
+  document.getElementById("aapi-next-btn").classList.add("disabled");
+  document.getElementById("aapi-next-btn").disabled = "disabled";
+  document.getElementById("aapi-autoplay-btn").classList.add("disabled");
+  document.getElementById("aapi-autoplay-btn").disabled = "disabled";
+  document.getElementById("aapi-next-btn").innerHTML = "Next";
+  aapiVis.timer = setInterval(function() {
+    if (aapiVis.currentIndex == aapiSlides.length) aapiVis.currentIndex = 0;
+    if (aapiSlides[aapiVis.currentIndex++]()) aapiVis.pauseTour();
+  }, aapiVis.manualDuration);
 });
 
-function startAutoplay() {
-  var autoplayBtn = document.getElementById("autoplay-btn");
-  if (autoplayBtn.innerHTML == "Start Autoplay") initialInteractions();
-  if (autoplayBtn.innerHTML == "Pause Autoplay") {
-    pauseDemo();
-    autoplayBtn.innerHTML = "Resume Autoplay";
-    return;
-  }
-  autoplayBtn.innerHTML = "Pause Autoplay";
-  document.getElementById("next-btn").classList.add("disabled");
-  document.getElementById("next-btn").disabled = "disabled";
-  timer = makeAutoplayTimer();
-}
-
-$("#autoplay-btn").click(startAutoplay);
-
-// Menu for autoplay speeds
-function setAutoplaySpeed(newDuration) {
-  autoDuration = newDuration;
-  if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") {
-    pauseDemo();
-    document.getElementById("next-btn").classList.add("disabled");
-    document.getElementById("next-btn").disabled = "disabled";
-    document.getElementById("autoplay-btn").innerHTML = "Pause Autoplay";
-    timer = makeAutoplayTimer();
-  } else {
-    startAutoplay();
-  }
-}
-$("#autoplay-speed-slow").click(function() {
-  setAutoplaySpeed(autoDurationSlow);
+$("#aapi-autoplay-btn").click(function() {
+  console.log(aapiVis.currentIndex);
+  aapiVis.startAutoplay();
 });
-$("#autoplay-speed-medium").click(function() {
-  setAutoplaySpeed(autoDurationMedium);
+
+$("#aapi-autoplay-speed-slow").click(function() {
+  aapiVis.setAutoplaySpeed(aapiVis.autoDurations.slow);
 });
-$("#autoplay-speed-fast").click(function() {
-  setAutoplaySpeed(autoDurationFast);
+$("#aapi-autoplay-speed-medium").click(function() {
+  aapiVis.setAutoplaySpeed(aapiVis.autoDurations.medium);
+});
+$("#aapi-autoplay-speed-fast").click(function() {
+  aapiVis.setAutoplaySpeed(aapiVis.autoDurations.fast);
 });
 
 // Menu for jumping between sections
-$("#jump-aggregated-immigration").click(function() {
-  if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
-  if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
-  document.getElementById("next-btn").innerHTML = "Next";
-  timer = makeJumpTimer(0);
+$("#aapi-jump-aggregated-immigration").click(function() {
+  if (document.getElementById("aapi-next-btn").innerHTML == "Start") aapiVis.initialInteractions();
+  if (document.getElementById("aapi-autoplay-btn").innerHTML == "Pause Autoplay") aapiVis.pauseTour();
+  document.getElementById("aapi-next-btn").innerHTML = "Next";
+  aapiVis.makeJumpTimer(0);
 });
-$("#jump-aggregated-income").click(function() {
-  if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
-  if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
-  document.getElementById("next-btn").innerHTML = "Next";
-  timer = makeJumpTimer(8);
+$("#aapi-jump-aggregated-income").click(function() {
+  if (document.getElementById("aapi-next-btn").innerHTML == "Start") aapiVis.initialInteractions();
+  if (document.getElementById("aapi-autoplay-btn").innerHTML == "Pause Autoplay") aapiVis.pauseTour();
+  document.getElementById("aapi-next-btn").innerHTML = "Next";
+  aapiVis.makeJumpTimer(8);
 });
-$("#jump-disaggregated-income").click(function() {
-  if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
-  if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
-  document.getElementById("next-btn").innerHTML = "Next";
-  timer = makeJumpTimer(13);
+$("#aapi-jump-disaggregated-income").click(function() {
+  if (document.getElementById("aapi-next-btn").innerHTML == "Start") aapiVis.initialInteractions();
+  if (document.getElementById("aapi-autoplay-btn").innerHTML == "Pause Autoplay") aapiVis.pauseTour();
+  document.getElementById("aapi-next-btn").innerHTML = "Next";
+  aapiVis.makeJumpTimer(13);
 });
-$("#jump-disaggregated-poverty-rates").click(function() {
-  if (document.getElementById("next-btn").innerHTML == "Start") initialInteractions();
-  if (document.getElementById("autoplay-btn").innerHTML == "Pause Autoplay") pauseDemo();
-  document.getElementById("next-btn").innerHTML = "Next";
-  timer = makeJumpTimer(18);
+$("#aapi-jump-disaggregated-poverty-rates").click(function() {
+  if (document.getElementById("aapi-next-btn").innerHTML == "Start") aapiVis.initialInteractions();
+  if (document.getElementById("aapi-autoplay-btn").innerHTML == "Pause Autoplay") aapiVis.pauseTour();
+  document.getElementById("aapi-next-btn").innerHTML = "Next";
+  aapiVis.makeJumpTimer(18);
 });
-
-function makeJumpTimer(targetIndex) {
-  return setInterval(function() {
-    currentIndex = targetIndex;
-    if (slides[currentIndex++]()) pauseDemo();
-  }, manualDuration);
-}
-
-function makeAutoplayTimer() {
-  return setInterval(function() {
-    if (currentIndex == slides.length) currentIndex = 0;
-    slides[currentIndex++]();
-    document.getElementById("next-btn").innerHTML = "Next";
-  }, autoDuration);
-}
-
-function pauseDemo() {
-  clearInterval(timer);
-  document.getElementById("next-btn").classList.remove("disabled");
-  document.getElementById("next-btn").disabled = "";
-  document.getElementById("autoplay-btn").classList.remove("disabled");
-  document.getElementById("autoplay-btn").disabled = "";
-  var autoplayButton = document.getElementById("autoplay-btn");
-  if (autoplayButton.innerHTML == "Pause Autoplay") autoplayButton.innerHTML = "Resume Autoplay";
-}
 
 // Menu for chart height
-function setChartHeight(adjustmentClass) {
-  chartHeightAdjustmentClass = adjustmentClass;
-  chart.resize({"height": calculateHeight(chartHeightClass, chartHeightAdjustmentClass)});
-}
-$("#chart-height-very-short").click(function() {
-  setChartHeight("much shorter");
+$("#aapi-chart-height-very-short").click(function() {
+  aapiVis.setChartHeight("much shorter");
 });
-$("#chart-height-short").click(function() {
-  setChartHeight("shorter");
+$("#aapi-chart-height-short").click(function() {
+  aapiVis.setChartHeight("shorter");
 });
-$("#chart-height-default").click(function() {
-  setChartHeight("default");
+$("#aapi-chart-height-default").click(function() {
+  aapiVis.setChartHeight("default");
 });
-$("#chart-height-tall").click(function() {
-  setChartHeight("taller");
+$("#aapi-chart-height-tall").click(function() {
+  aapiVis.setChartHeight("taller");
 });
-$("#chart-height-very-tall").click(function() {
-  setChartHeight("much taller");
+$("#aapi-chart-height-very-tall").click(function() {
+  aapiVis.setChartHeight("much taller");
 });
 
 // Enable tooltips
-$("#chart-title").tooltip({
+$("#aapi-chart-title").tooltip({
   trigger: 'hover'
 });
-$("#next-btn").tooltip({
+$("#aapi-next-btn").tooltip({
   trigger: 'hover'
 });
-$("#autoplay-btn").tooltip({
+$("#aapi-autoplay-btn").tooltip({
   trigger: 'hover'
 });
-$("#height-dropdown").tooltip({
+$("#aapi-height-dropdown").tooltip({
   trigger: 'hover'
 });
-$("#autoplay-speed-menu").tooltip({
+$("#aapi-autoplay-speed-menu").tooltip({
   trigger: 'hover'
 });
 $("body").tooltip({

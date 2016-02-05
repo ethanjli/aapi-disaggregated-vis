@@ -11,15 +11,15 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" type="text/css" />
-    <link href="app/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  
-      ga('create', 'UA-72782826-1', 'auto');
-      ga('send', 'pageview');
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-72782826-1', 'auto');
+ga('send', 'pageview');
     </script>
   </head>
   <body>
@@ -33,57 +33,57 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <div id="chart-panel" class="panel panel-default">
+          <div id="aapi-chart-panel" class="panel panel-default">
             <div class="panel-heading">
               <div class="btn-group" role="group">
-                <button id="chart-title" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Jump to a section of the guided tour of the data">Introduction <span class="caret"></span></button>
+                <button id="aapi-chart-title" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Jump to a section of the guided tour of the data">Introduction <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li class="dropdown-header">Jump to section...</li>
-                  <li><a id="jump-aggregated-immigration" data-target="#">Aggregated Immigration</a></li>
-                  <li><a id="jump-aggregated-income" data-target="#">Aggregated Income</a></li>
-                  <li><a id="jump-disaggregated-income" data-target="#">Disaggregated Income</a></li>
-                  <li><a id="jump-disaggregated-poverty-rates" data-target="#">Poverty and Education</a></li>
+                  <li><a id="aapi-jump-aggregated-immigration" data-target="#">Aggregated Immigration</a></li>
+                  <li><a id="aapi-jump-aggregated-income" data-target="#">Aggregated Income</a></li>
+                  <li><a id="aapi-jump-disaggregated-income" data-target="#">Disaggregated Income</a></li>
+                  <li><a id="aapi-jump-disaggregated-poverty-rates" data-target="#">Poverty and Education</a></li>
                 </ul>
               </div>
               <div class="btn-toolbar pull-right" role="toolbar" aria-label="Presentation controls">
                 <div class="btn-group" role="group">
-                  <button id="height-dropdown" type="button" class="btn btn-default dropdown-toggle hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Change height of the chart">Height <span class="caret"></span></button>
+                  <button id="aapi-height-dropdown" type="button" class="btn btn-default dropdown-toggle hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Change height of the chart">Height <span class="caret"></span></button>
                   <ul class="dropdown-menu dropdown-menu-right">
                     <li class="dropdown-header">Change chart height...</li>
-                    <li><a id="chart-height-very-short" data-target="#">Much shorter</a></li>
-                    <li><a id="chart-height-short" data-target="#">Shorter</a></li>
-                    <li><a id="chart-height-default" data-target="#">Default</a></li>
-                    <li><a id="chart-height-tall" data-target="#">Taller</a></li>
-                    <li><a id="chart-height-very-tall" data-target="#">Much taller</a></li>
+                    <li><a id="aapi-chart-height-very-short" data-target="#">Much shorter</a></li>
+                    <li><a id="aapi-chart-height-short" data-target="#">Shorter</a></li>
+                    <li><a id="aapi-chart-height-default" data-target="#">Default</a></li>
+                    <li><a id="aapi-chart-height-tall" data-target="#">Taller</a></li>
+                    <li><a id="aapi-chart-height-very-tall" data-target="#">Much taller</a></li>
                   </ul>
                 </div>
                 <div class="btn-group">
-                  <button id="next-btn" type="button" class="btn btn-default" title="Advance to next slide">Start</button>
+                  <button id="aapi-next-btn" type="button" class="btn btn-default" title="Advance to next slide">Start</button>
                 </div>
                 <div class="btn-group">
-                  <button id="autoplay-btn" type="button" class="btn btn-default" title="Automatically advance slides on a timer">Start Autoplay</button>
-                  <button id="autoplay-speed-menu" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Change speed at which autoplay runs"><span class="caret"></span><span class="sr-only">Autoplay Speed</span></button>
+                  <button id="aapi-autoplay-btn" type="button" class="btn btn-default" title="Automatically advance slides on a timer">Start Autoplay</button>
+                  <button id="aapi-autoplay-speed-menu" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Change speed at which autoplay runs"><span class="caret"></span><span class="sr-only">Autoplay Speed</span></button>
                   <ul class="dropdown-menu dropdown-menu-right">
                     <li class="dropdown-header">Set autoplay speed...</li>
-                    <li><a id="autoplay-speed-slow" data-target="#">Slow</a></li>
-                    <li><a id="autoplay-speed-medium" data-target="#">Medium</a></li>
-                    <li><a id="autoplay-speed-fast" data-target="#">Fast</a></li>
+                    <li><a id="aapi-autoplay-speed-slow" data-target="#">Slow</a></li>
+                    <li><a id="aapi-autoplay-speed-medium" data-target="#">Medium</a></li>
+                    <li><a id="aapi-autoplay-speed-fast" data-target="#">Fast</a></li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="panel-body">
-              <div id="chart">
+              <div id="aapi-chart">
                 <p>The model minority stereotype became popular in the 1960s and 1970s, the era of the Civil Rights Movement and the Black Power Movement. After the Immigration Act of 1965 and subsequent immigration laws removed limits on immigration from Asian
                 countries and opened the doors to highly skilled foreign nationals, Asian Americans started being praised as apolitical, economically successful "model minorities" in contrast to African Americans, who were deemed "problem minorities". But,
                 as you'll see in recent data from California, multiple subgroups within the Asian American and Pacific Islander (AAPI) category resemble other nonwhite racial groups on important socioeconomic metrics &ndash; the model minority myth is a
                 convenient fiction that rationalizes the status quo of inequalities within and beyond Asian Americans and Pacific Islanders.</p>
-                <img class="img-responsive" src="http://img.timeinc.net/time/magazine/archive/covers/1987/1101870831_400.jpg" alt="TIME Magazine Cover, Aug. 31, 1987: Those Asian-American Whiz Kids">
+                <img id="aapi-introduction-photo" class="img-responsive" src="http://img.timeinc.net/time/magazine/archive/covers/1987/1101870831_400.jpg" alt="TIME Magazine Cover, Aug. 31, 1987: Those Asian-American Whiz Kids">
               </div>
             </div>
-            <div id="chart-message" class="panel-footer hidden"></div>
+            <div id="aapi-chart-message" class="panel-footer hidden"></div>
           </div>
-          <small id="reference">Image source: <a href="http://content.time.com/time/covers/0,16641,19870831,00.html">Time Magazine</a></small>
+          <small id="aapi-reference">Image source: <a href="http://content.time.com/time/covers/0,16641,19870831,00.html">Time Magazine</a></small>
           <hr>
           <small><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">"Disaggregating the Model Minority"</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="lietk12.github.io/aapi-disaggregated-vis" property="cc:attributionName" rel="cc:attributionURL">Ethan Li</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="http://www.advancingjustice.org/publication/community-contrasts-asian-americans-native-hawaiians-and-pacific-islanders-california" rel="dct:source">Asian Americans Advancing Justice</a>. Source code available <a href="https://github.com/lietk12/aapi-disaggregated-vis">on Github</a>.</small>
         </div>
