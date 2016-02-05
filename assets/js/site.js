@@ -466,8 +466,8 @@ var aapiVis = {
       "much shorter": -200,
       "shorter": -100,
       "default": 0,
-      "taller": 300,
-      "much taller": 500
+      "taller": 200,
+      "much taller": 400
     }
   }],
   "chartHeightClass": 0,
